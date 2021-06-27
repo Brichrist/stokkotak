@@ -19,6 +19,13 @@ Route::get('/', function () {
 });
 
 route::resource('/stockkotak', StockBoxController::class);
+// route::post('/stockkotak/store', [StockBoxController::class,'store']);
+// route::post('/stockkotak/update/{id}', [StockBoxController::class,'update']);
+
+route::get('/stockkotak/change/{ukuran}', [StockBoxController::class,'indexukuran']);
+route::get('/stockkotak/change/{ukuran}/{tinggi}', [StockBoxController::class,'indextinggi']);
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

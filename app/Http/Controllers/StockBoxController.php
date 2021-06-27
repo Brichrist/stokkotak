@@ -14,7 +14,21 @@ class StockBoxController extends Controller
      */
     public function index()
     {
-        //
+        $files=StockBox::where('jumlah','>',0)->orderBy('ukuran','ASC')->orderBy('tinggi','ASC')->get();
+        return view("stockkotak",compact("files"));
+
+    }
+    public function indexukuran($ukuran)
+    {
+        $tinggi=StockBox::where('jumlah','>',0)->where("ukuran",$ukuran)->orderBy('ukuran','ASC')->orderBy('tinggi','ASC')->pluck("tinggi");
+        return json_encode($tinggi);
+    }
+    public function indextinggi($ukuran,$tinggi)
+    {
+        $jumlah=StockBox::where('jumlah','>',0)->where("ukuran",$ukuran)->where("tinggi",$tinggi)->orderBy('ukuran','ASC')->orderBy('tinggi','ASC')->pluck("jumlah",'id');
+        // dd($jumlah);
+        return json_encode($jumlah);
+
     }
 
     /**
@@ -50,6 +64,7 @@ class StockBoxController extends Controller
                 'jumlah' => $request->jumlah + $stockawal->jumlah,
             ]);
         }
+        return redirect("/stockkotak");
     }
 
     /**
@@ -84,9 +99,12 @@ class StockBoxController extends Controller
     public function update(Request $request, StockBox $stockBox)
     {
         $stockawal=StockBox::select('jumlah')->where("ukuran",$request->ukuran)->where("tinggi",$request->tinggi)->first();
-            StockBox::where("ukuran",$request->ukuran)->where("tinggi",$request->tinggi)->update([
-                'jumlah' => $request->jumlah + $stockawal->jumlah,
-            ]);
+        // dd($stockawal);
+        StockBox::where("ukuran",$request->ukuran)->where("tinggi",$request->tinggi)->update([
+            'jumlah' =>  $stockawal->jumlah - $request->jumlah ,
+        ]);
+        return redirect("/stockkotak");
+        
     }
 
     /**

@@ -15,7 +15,7 @@ class CreateStockBoxesTable extends Migration
     {
         Schema::create('stock_boxes', function (Blueprint $table) {
             $table->id();
-            $table->integer('ukuran');
+            $table->string('ukuran');
             $table->integer('tinggi');
             $table->integer('jumlah');
             $table->timestamps();
