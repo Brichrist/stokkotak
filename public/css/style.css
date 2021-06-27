@@ -16,13 +16,31 @@
     font-family: "Poppins", sans-serif;
 }
 
+#darkmode {
+    background-color: #121212;
+    color: var(--primary-color);
+}
+
+#darkmode .sidebar,
+#darkmode header {
+    background-color: #1d2231;
+}
+
+#darkmode header {
+    box-shadow: 2px 2px 5px rgba(231, 231, 231, 0.2);
+}
+
+#darkmode tr:nth-child(even) {
+    background-color: #333;
+}
+
 .sidebar {
     width: 200px;
     position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     transition: width 300ms;
 }
 
@@ -71,8 +89,10 @@
 }
 
 header {
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     position: fixed;
@@ -86,10 +106,16 @@ header {
 header label,
 header h1 {
     font-size: 1.5rem;
+    display: inline;
 }
 
 header label {
     margin-right: 10px;
+}
+
+.mode {
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 #nav-toggle {

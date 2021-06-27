@@ -58,3 +58,22 @@ const mainContent = document.querySelector("main");
 mainContent.addEventListener("click", function () {
     document.getElementById("nav-toggle").checked = false;
 });
+
+function setDarkMode(isDark) {
+    if (isDark) {
+        document.body.setAttribute("id", "darkmode");
+    } else {
+        document.body.setAttribute("id", "");
+    }
+}
+
+const mode = document.querySelector(".mode i");
+
+mode.addEventListener("click", function () {
+    mode.classList.toggle("bi-lightbulb-off-fill");
+    if (mode.classList.contains("bi-lightbulb-off-fill")) {
+        console.log("light mode");
+    } else {
+        console.log("dark mode");
+    }
+});

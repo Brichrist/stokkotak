@@ -36,10 +36,15 @@
 
     <div class="main-content">
       <header>
-        <label for="nav-toggle">
-          <i class="bi bi-list"></i>
-        </label>
-        <h1></h1>
+        <div>
+          <label for="nav-toggle">
+            <i class="bi bi-list"></i>
+          </label>
+          <h1></h1>
+        </div>
+        <div class="mode">
+          <i class="bi bi-lightbulb-off-fill bi-lightbulb-fill"></i>
+        </div>
       </header>
 
       <main>
