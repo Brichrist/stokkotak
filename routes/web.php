@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StockBoxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-});
+
+route::resource('/stockkotak', StockBoxController::class);
+// route::post('/stockkotak/store', [StockBoxController::class,'store']);
+// route::post('/stockkotak/update/{id}', [StockBoxController::class,'update']);
+
+route::get('/stockkotak/change/{ukuran}', [StockBoxController::class,'indexukuran']);
+route::get('/stockkotak/change/{ukuran}/{tinggi}', [StockBoxController::class,'indextinggi']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/home', function () {
+    return view('home');
+});
