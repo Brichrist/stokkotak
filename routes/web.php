@@ -26,6 +26,8 @@ route::resource('/stockkotak', StockBoxController::class);
 route::get('/stockkotak/change/{ukuran}', [StockBoxController::class,'indexukuran']);
 route::get('/stockkotak/change/{ukuran}/{tinggi}', [StockBoxController::class,'indextinggi']);
 
+route::get('/stockkotak/update/{id}/{func}', [StockBoxController::class,'updatedata']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

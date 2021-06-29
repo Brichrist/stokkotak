@@ -52,22 +52,40 @@
           <div class="information">
             <div class="information-solo bg-primary">
               <div>
-                <h1>52</h1>
-                <p>Total Boxs</p>
+                <h1>
+                <?php $number = 0 ?>
+                @foreach ($files->where('ukuran','large') as $file)
+                  <?php $number = $number+($file->jumlah) ?>
+                @endforeach
+                {{$number}}
+                </h1>
+                <p>Large Box</p>
               </div>
             </div>
 
             <div class="information-solo bg-secondary">
               <div>
-                <h1>30</h1>
-                <p>Small Box</p>
+                <h1>
+                <?php $number = 0 ?>
+                @foreach ($files->where('ukuran','medium') as $file)
+                  <?php $number = $number+($file->jumlah) ?>
+                @endforeach
+                {{$number}}
+                </h1>
+                <p>Medium Box</p>
               </div>
             </div>
 
             <div class="information-solo bg-ternary">
               <div>
-                <h1>22</h1>
-                <p>Medium Box</p>
+                <h1>
+                <?php $number = 0 ?>
+                @foreach ($files->where('ukuran','small') as $file)
+                  <?php $number = $number+($file->jumlah) ?>
+                @endforeach
+                {{$number}}
+                </h1>
+                <p>Small Box</p>
               </div>
             </div>
           </div>
@@ -85,30 +103,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Kotak 26x26</td>
-                    <td>Medium</td>
-                    <td>20</td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td>Kotak 24x24</td>
-                    <td>Small</td>
-                    <td>25</td>
-                    <td>3</td>
-                  </tr>
-                  <tr>
-                    <td>Kotak 30x30</td>
-                    <td>Large</td>
-                    <td>30</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <td>Kotak 30x30</td>
-                    <td>Large</td>
-                    <td>20</td>
-                    <td>5</td>
-                  </tr>
+                  @foreach ($files as $file)
+                    <tr>
+                      @if ($file->ukuran=="large")
+                        <td>Kotak 30x30</td>
+                      @elseif($file->ukuran=="medium")
+                        <td>Kotak 26x26</td>
+                      @else
+                        <td>Kotak 24x24</td>      
+                      @endif
+                      <td>{{ $file->ukuran }}</td>
+                      <td>{{ $file->tinggi }}</td>
+                      <td>{{ $file->jumlah }}</td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -122,22 +130,23 @@
             <form id="formSearch">
               <div class="form-element">
                 <label for="category">Choose category:</label><br />
-                <select id="category" name="category">
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option></select
-                ><br />
+                <select id="category" name="ukuran">
+                  <option selected disabled>-----choose-----</option>
+                  @foreach ($files->unique('ukuran') as $file)
+                      <option value={{$file->ukuran}}>{{$file->ukuran}}</option>
+                  @endforeach
+                </select>
+                <br />
               </div>
               <div class="form-element">
                 <label for="height">Choose height:</label><br />
-                <select id="height" name="height">
-                  <option value="21">21</option>
-                  <option value="22">22</option>
-                  <option value="23">22</option></select
-                ><br />
+                <select id="height" name="tinggi">
+                  <option selected disabled>-----choose-----</option>
+                </select>
+                <br />
               </div>
             </form>
-            <p>Quantity: ....</p>
+            <p>Quantity:  <span id="quantity">...</span></p>
           </div>
 
           <div class="table-responsive">
@@ -152,38 +161,24 @@
                 </tr>
               </thead>
               <tbody>
+              @foreach ($files as $file)
                 <tr>
-                  <td>Kotak 26x26</td>
-                  <td>Medium</td>
-                  <td>20</td>
+                  @if ($file->ukuran=="large")
+                    <td>Kotak 30x30</td>
+                  @elseif($file->ukuran=="medium")
+                    <td>Kotak 26x26</td>
+                  @else
+                    <td>Kotak 24x24</td>      
+                  @endif
+                  <td>{{ $file->ukuran }}</td>
+                  <td>{{ $file->tinggi }}</td>
                   <td>
-                    10 <button><i class="bi bi-dash-circle"></i></button>
+                  <button class="buttonupdate {{ $file->id }} negative" ><i class="bi bi-dash-circle"></i></button>
+                  <div class="value">{{ $file->jumlah }}</div>
+                  <button class="buttonupdate {{ $file->id }} positive"><i class="bi bi-plus-circle"></i></button>
                   </td>
-                </tr>
-                <tr>
-                  <td>Kotak 24x24</td>
-                  <td>Small</td>
-                  <td>25</td>
-                  <td>
-                    3 <button><i class="bi bi-dash-circle"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Kotak 30x30</td>
-                  <td>Large</td>
-                  <td>30</td>
-                  <td>
-                    1 <button><i class="bi bi-dash-circle"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Kotak 30x30</td>
-                  <td>Large</td>
-                  <td>20</td>
-                  <td>
-                    5 <button><i class="bi bi-dash-circle"></i></button>
-                  </td>
-                </tr>
+                  </tr>
+              @endforeach
               </tbody>
             </table>
           </div>
@@ -192,23 +187,34 @@
             <div class="modal-content">
               <span class="close">&times;</span>
               <!-- FORM 2 -->
-              <form id="formAdd">
+              <form id="formAdd" action="/stockkotak" method="post" enctype="multipart/form-data">
+                @csrf
                 <h2>Add Box to Inventory</h2>
                 <label for="inputTinggi">Height</label>
-                <input type="text" id="inputTinggi" placeholder="e.g. 25" />
+                <input type="text"  name="tinggi" id="inputTinggi" placeholder="e.g. 25" />
                 <label for="inputCategory">Category</label>
-                <select id="inputCategory" name="inputCategory">
+                <select class="form-control" id="inputCategory" name="ukuran">
                   <option value="small">Small</option>
                   <option value="medium">Medium</option>
                   <option value="large">Large</option>
                 </select>
-                <button>Add Box</button>
+                <div class="form-group">
+                  <label for="inputJumlah">jumlah</label>
+                  <input type="text" name="jumlah" id="inputJumlah" placeholder="e.g. 5">
+                </div>
+                <button type="submit">Add Box</button>
               </form>
             </div>
           </div>
         </section>
       </main>
     </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="{{ asset('js/script.js')}}"></script>
+    <script src="{{ asset('js/style.js') }}"></script>
+
   </body>
 </html>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\StockBox;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+
 
 class StockBoxController extends Controller
 {
@@ -15,7 +17,7 @@ class StockBoxController extends Controller
     public function index()
     {
         $files=StockBox::where('jumlah','>',0)->orderBy('ukuran','ASC')->orderBy('tinggi','ASC')->get();
-        return view("stockkotak",compact("files"));
+        return view("home",compact("files"));
 
     }
     public function indexukuran($ukuran)
@@ -64,6 +66,7 @@ class StockBoxController extends Controller
                 'jumlah' => $request->jumlah + $stockawal->jumlah,
             ]);
         }
+        dd(URL::current());
         return redirect("/stockkotak");
     }
 
@@ -105,6 +108,24 @@ class StockBoxController extends Controller
         ]);
         return redirect("/stockkotak");
         
+    }
+    public function updatedata($id,$func)
+    {
+        // dd("aa");
+
+        $stockawal=StockBox::select('jumlah')->find($id)->jumlah;
+        if ($func =="negative") {
+            $stockawal =  $stockawal- 1 ;
+        } else {
+            $stockawal=  $stockawal + 1 ;
+        }
+        // dd($stockawal);
+
+        StockBox::find($id)->update(['jumlah'=>$stockawal]);
+        // dd($stockawal);
+
+        return json_encode($stockawal);
+
     }
 
     /**

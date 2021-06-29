@@ -1,15 +1,16 @@
 jQuery(document).ready(function () {
     jQuery('select[name="ukuran"]').on('change', function () {
-        var update_ukuran_ID = jQuery(this).val();
-        if (update_ukuran_ID) {
+        var category_ID = jQuery(this).val();
+        if (category_ID) {
             jQuery.ajax({
-                url: '/stockkotak/change/' + update_ukuran_ID,
+                url: '/stockkotak/change/' + category_ID,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
                     jQuery('select[name="tinggi"]').empty();
-                    jQuery('#update_jumlah').empty();
+                    jQuery('#quantity').empty();
+                    $('#quantity').append("...");
                     $('#update_stockkotak_form').attr('action', '');
                     $('select[name="tinggi"]').append('<option selected disabled>-----choose-----</option>');
                     jQuery.each(data, function (key, value) {
@@ -20,7 +21,8 @@ jQuery(document).ready(function () {
         }
         else {
             $('select[name="tinggi"]').empty();
-            jQuery('#update_jumlah').empty();
+            jQuery('#quantity').empty();
+            $('#quantity').append("...");
         }
     });
 
@@ -28,30 +30,72 @@ jQuery(document).ready(function () {
 
 
     jQuery('select[name="tinggi"]').on('change', function () {
-        var update_tinggi_ID = jQuery(this).val();
-        var update_ukuran_ID = jQuery('select[name="ukuran"]').val();
-        console.log(update_ukuran_ID);
+        var height_ID = jQuery(this).val();
+        var category_ID = jQuery('select[name="ukuran"]').val();
+        console.log(category_ID);
 
 
-        if (update_tinggi_ID) {
+        if (height_ID) {
             jQuery.ajax({
-                url: '/stockkotak/change/' + update_ukuran_ID + '/' + update_tinggi_ID,
+                url: '/stockkotak/change/' + category_ID + '/' + height_ID,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    jQuery('#update_jumlah').empty();
+                    jQuery('#quantity').empty();
+                    $('#quantity').append("...");
                     jQuery.each(data, function (key, value) {
                         $('#update_stockkotak_form').attr('action', '/stockkotak/' + key);
-                        $('#update_jumlah').append(value);
+                        console.log(value);
+                        jQuery('#quantity').empty();
+                        $('#quantity').append(value);
                     });
                 }
             });
         }
         else {
-            jQuery('#update_jumlah').empty();
+            jQuery('#quantity').empty();
+            $('#quantity').append("...");
         }
     });
+
+
+
+
+    jQuery('.buttonupdate').on('click', function () {
+        var kelas = jQuery(this).attr("class");
+        kelas = kelas.replace('buttonupdate ', '');
+        var kelas = kelas.split(" ");
+        console.log(kelas[0]);
+        var currentRow = $(this).closest("tr");
+
+
+        jQuery.ajax({
+            url: '/stockkotak/update/' + kelas[0] + '/' + kelas[1],
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                console.log(currentRow.find(".value").text());
+                currentRow.find(".value").text(data);
+                console.log(currentRow.find(".value").text());
+
+
+                // jQuery.each(data, function (key, value) {
+                //     console.log(value);
+                // });
+
+            }
+        }
+
+
+        );
+
+    });
+
+
+
+
 });
 
 
