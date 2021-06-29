@@ -66,7 +66,7 @@ class StockBoxController extends Controller
                 'jumlah' => $request->jumlah + $stockawal->jumlah,
             ]);
         }
-        dd(URL::current());
+        // dd(URL::current());
         return redirect("/stockkotak");
     }
 
