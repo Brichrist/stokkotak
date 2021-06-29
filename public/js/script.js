@@ -72,8 +72,8 @@ const mode = document.querySelector(".mode i");
 mode.addEventListener("click", function () {
     mode.classList.toggle("bi-lightbulb-off-fill");
     if (mode.classList.contains("bi-lightbulb-off-fill")) {
-        console.log("light mode");
+        setDarkMode(false);
     } else {
-        console.log("dark mode");
+        setDarkMode(true);
     }
 });
