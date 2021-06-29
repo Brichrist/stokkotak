@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/filter.css') }}" rel="stylesheet">
+
     <title>Box App</title>
   </head>
   <body>
@@ -151,6 +153,17 @@
 
           <div class="table-responsive">
             <button type="button">Add Box</button>
+            <ul>
+              <li class="list active" data-filter="all">All</li>
+              @foreach ($files->unique('ukuran') as $file)
+              <li class="list" data-filter="{{ $file->ukuran }}">{{ $file->ukuran }}</li>
+              @endforeach
+              </ul>
+              <ul>
+              @foreach ($files->unique('tinggi')->sortBy('tinggi') as $file)
+              <li class="list" data-filter="{{ $file->tinggi}}">{{ $file->tinggi }}</li>
+              @endforeach
+            </ul>
             <table width="100%">
               <thead>
                 <tr>
@@ -162,7 +175,7 @@
               </thead>
               <tbody>
               @foreach ($files as $file)
-                <tr>
+                <tr class="itemBox" data-item="{{ $file->ukuran }}" data-item1="{{ $file->tinggi }}">
                   @if ($file->ukuran=="large")
                     <td>Kotak 30x30</td>
                   @elseif($file->ukuran=="medium")
@@ -215,6 +228,8 @@
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="{{ asset('js/script.js')}}"></script>
     <script src="{{ asset('js/style.js') }}"></script>
+    <script src="{{ asset('js/filter.js')}}"></script>
+
 
   </body>
 </html>
