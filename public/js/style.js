@@ -80,6 +80,16 @@ jQuery(document).ready(function () {
                 currentRow.find(".value").text(data);
                 console.log(currentRow.find(".value").text());
 
+                if(data == 0){
+                    currentRow.find('.negative').prop('disabled', true);
+                    currentRow.find('.negative').css("color", "gray");
+                }
+
+                if(data > 0){
+                    currentRow.find('.negative').prop('disabled', false);
+                    currentRow.find('.negative').css("color", "red");
+                }
+
 
                 // jQuery.each(data, function (key, value) {
                 //     console.log(value);
