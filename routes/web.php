@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StockBoxController;
+use App\Http\Controllers\FirebaseController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +55,6 @@ Route::get('/home', function () {
 Route::get('/filter', function () {
     return view('filter');
 });
+Route::get('/offline', [StockBoxController::class,'index']);
+
+Route::get('/firebase',[FirebaseController::class,'index']);

@@ -9,6 +9,7 @@
     <link href="{{ asset('css/filter.css') }}" rel="stylesheet">
 
     <title>Box App</title>
+    @laravelPWA
   </head>
   <body>
     <input type="checkbox" id="nav-toggle" checked />
