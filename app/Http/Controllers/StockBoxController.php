@@ -17,6 +17,10 @@ class StockBoxController extends Controller
     public function index()
     {
         $files=StockBox::where('jumlah','>',0)->orderBy('ukuran','ASC')->orderBy('tinggi','ASC')->get();
+        // dd(url::current());
+        if (str_contains(url::current(), 'offline')) {
+            return view("vendor/laravelpwa/offline",compact("files"));
+        }
         return view("home",compact("files"));
 
     }

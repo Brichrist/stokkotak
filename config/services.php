@@ -30,4 +30,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // 'firebase' => [
+    //     'api_key' => 'AIzaSyDmJSeaabs1RwBNKlkzn8Ucn9Oo9WH-f6c',
+    //     'auth_domain' => 'stockkotak-f22ff.firebaseapp.com',
+    //     // 'database_url' => 'database_url',
+    //     'project_id' => 'stockkotak-f22ff',
+    //     'storage_bucket' => 'stockkotak-f22ff.appspot.com',
+    //     'messaging_sender_id' => '296569358792',
+    //     'app_id' => '1:296569358792:web:8887957c3b5694abbf98fd',
+    //     'measurement_id' => 'G-NFYGM94VQM',
+
+    // ],
+
 ];
